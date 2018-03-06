@@ -1,0 +1,74 @@
+{
+    "ingredients": [
+        {
+            "name": "tomates",
+            "price": 1.0,
+            "stock": 10
+        },
+        {
+            "name": "oignons",
+            "price": 0.5,
+            "stock": 15
+        },
+        {
+            "name": "champignons",
+            "price": 2.0,
+            "stock": 45
+        },
+        {
+            "name": "pepperoni",
+            "price": 1.5,
+            "stock": 30
+        },
+        {
+            "name": "ananas",
+            "price": 3.0,
+            "stock": 100
+        },
+        {
+            "name": "poivrons",
+            "price": 0.75,
+            "stock": 5
+        },
+        {
+            "name": "fromage",
+            "price": 1.25,
+            "stock": 1
+        },
+        {
+            "name": "artichauts",
+            "price": 5.0,
+            "stock": 20
+        },
+        {
+            "name": "olives",
+            "price": 2.25,
+            "stock": 40
+        },
+        {
+            "name": "bacon",
+            "price": 4.0,
+            "stock": 6
+        },
+        {
+            "name": "jambon",
+            "price": 3.0,
+            "stock": 4
+        },
+        {
+            "name": "anchois",
+            "price": 1.25,
+            "stock": 200
+        },
+        {
+            "name": "fromage de chèvre",
+            "price": 6.0,
+            "stock": 40
+        },
+        {
+            "name": "roquette",
+            "price": 2.45,
+            "stock": 55
+        }
+    ]
+}
