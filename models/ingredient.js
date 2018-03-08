@@ -3,10 +3,10 @@ var mongoose = require('mongoose');
 //Ingredient Schema
 var ingredientSchema = mongoose.Schema(
   {
-  name: { type: String, required: true, unique: true },
-  price: { type: Number, required: true, min: 0 },
-  stock: { type: Number, required: true, min: 0 }
-}
+    name: { type: String, required: true, unique: true },
+    price: { type: Number, required: true, min: 0 },
+    stock: { type: Number, required: true, min: 0 }
+  }
 );
 
 var IngredientModel =  module.exports = mongoose.model('Ingredient', ingredientSchema);
@@ -14,6 +14,12 @@ var IngredientModel =  module.exports = mongoose.model('Ingredient', ingredientS
 //Get Ingredient from the mongodb
 module.exports.getIngredients = function (callback, limit) {
   IngredientModel.find(callback).limit(limit);
+};
+
+//Get Ingredient from the mongodb
+module.exports.getIngredientsInstock = function (callback, limit) {
+  var query = { stock: { $gt: 0 } };
+  IngredientModel.find(query,callback).limit(limit);
 };
 
 //Add Ingredient to mongodb Ingredient Collection

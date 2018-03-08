@@ -54,11 +54,25 @@ var jsonOrder =
       'name': 'champignons',
     },
     {
-      'name': 'fromage',
+      'name': 'roquette',
     }
   ]
 };
 
+//  var obj = JSON.parse(jsonOrder);
+OrderModel.validateIngredientOrder(jsonOrder, OrderModel
+  .addOrder(jsonOrder, function (err, newOrder) {
+  if (err) {
+    throw err;
+  }
+
+  console.log(`Order has been inserted`);
+  console.log(newOrder);
+})
+);
+
+
+/*
 //  var obj = JSON.parse(jsonOrder);
 OrderModel.addOrder(jsonOrder, function (err) {
   if (err) {
@@ -68,13 +82,23 @@ OrderModel.addOrder(jsonOrder, function (err) {
   console.log(`Order has been inserted`);
 });  //End
 
-
+*/
 app.get('/', function (req, res) {
   res.send('Please use /api/orders  or /api/ingredients');
 });
 
 app.get('/api/ingredients', function (req, res) {
   IngredientModel.getIngredients(function (err, ingredients) {
+    if (err) {
+      throw err;
+    }
+
+    res.json(ingredients);
+  });
+});
+
+app.get('/api/ingredients/instock', function (req, res) {
+  IngredientModel.getIngredientsInstock(function (err, ingredients) {
     if (err) {
       throw err;
     }
@@ -142,6 +166,6 @@ app.use(express.static('./public'));
 */
 app.listen(3000);
 
-console.log('Express app ruinning on http://localhost:3000/')
+console.log('Express app ruinning on http://localhost:3000/');
 
 module.exports = app;

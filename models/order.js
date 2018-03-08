@@ -17,10 +17,10 @@ module.exports.getOrders = function (callback, limit) {
 };
 
 //Add Ingredient to mongodb Ingredient Collection
-module.exports.addOrder = function (order, callback) {
+module.exports.validateIngredientOrder = function (order, callback) {
   var list = [];
-  for (var i in order.listIngredient) {
-    var a = order.listIngredient[i].name;
+  for (var it = 0; it < order.listIngredient.length; it++) {
+    var a = order.listIngredient[it].name;
     IngredientModel.findOne({ 'name': a },  function (err, ing) {
       if (err || !ing) {
         console.log('Doesn\'t exist');
@@ -32,11 +32,10 @@ module.exports.addOrder = function (order, callback) {
           stock: ing.stock - 1,
         };
         list.push(ing.name);
-        IngredientModel.findOneAndUpdate(query, update, { new: true },function (err, resp) {
-          if (ing.stock <= 0) {
-            //TODO Add exception for insufficient stock
-            for (var i in list) {
-              IngredientModel.findOne({ 'name': list[i] },  function (err, ingB) {
+        IngredientModel.findOneAndUpdate(query, update, { new: true },function (err, newIng) {
+          if (newIng.stock < 0) {
+            for (var rollBackIndex in list) {
+              IngredientModel.findOne({ 'name': list[rollBackIndex] },  function (err, ingB) {
                 var query = { 'name': ingB.name };
                 var update = {
                   name: ingB.name,
@@ -47,26 +46,24 @@ module.exports.addOrder = function (order, callback) {
                 IngredientModel.findOneAndUpdate(query, update, { new: true }, function (err, res) {
                   if (err) { throw err; }
 
-                  console.log("Fail "+ res);
+                  //console.log("Fail "+ res);
                 });
 
               });
-
             }
-
           }
 
-          console.log("Succes "+resp);
+          //console.log("Succes "+newIng);
         });
       }
     });
 
   }
 
-  //OrderModel.create(order, callback);
 };
 
 //Add Ingredient to mongodb Ingredient Collection
-module.exports.creatte = function (order, callback) {
+module.exports.addOrder  = function (order, callback) {
   OrderModel.create(order, callback);
-};
+  console.log("I think it work!!!!");
+}
