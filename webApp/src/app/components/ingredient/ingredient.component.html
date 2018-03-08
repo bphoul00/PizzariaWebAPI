@@ -1,0 +1,13 @@
+<h1>{{name}}</h1>
+<ul>
+  <li>Price: {{price}}</li>
+  <li>Stock: {{stock}}</li>
+</ul>
+<button (click)="onClick()" >Click Me</button>
+
+<form (submit)="addIngredient(name.value)">
+  <div>
+    <label for="name">Name of Ingredient:</label>
+    <input type="text" #ingredient>
+  </div>
+</form>
