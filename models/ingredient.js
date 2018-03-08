@@ -4,8 +4,8 @@ var mongoose = require('mongoose');
 var ingredientSchema = mongoose.Schema(
   {
   name: { type: String, required: true, unique: true },
-  price: { type: Number, required: true, minimum: 0 },
-  stock: { type: Number, required: true, minimum: 0 }
+  price: { type: Number, required: true, min: 0 },
+  stock: { type: Number, required: true, min: 0 }
 }
 );
 

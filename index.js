@@ -52,6 +52,9 @@ var jsonOrder =
     },
     {
       'name': 'champignons',
+    },
+    {
+      'name': 'fromage',
     }
   ]
 };

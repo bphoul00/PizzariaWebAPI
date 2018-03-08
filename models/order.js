@@ -18,29 +18,46 @@ module.exports.getOrders = function (callback, limit) {
 
 //Add Ingredient to mongodb Ingredient Collection
 module.exports.addOrder = function (order, callback) {
+  var list = [];
   for (var i in order.listIngredient) {
     var a = order.listIngredient[i].name;
     IngredientModel.findOne({ 'name': a },  function (err, ing) {
-      if (err || ing.length == 0) {
+      if (err || !ing) {
         console.log('Doesn\'t exist');
       } else {
-        if (ing.stock >= 1 ) {
-          var query = { 'name': ing.name };
-          var update = {
-            name: ing.name,
-            price: ing.price,
-            stock: ing.stock - 1,
-          };
-          console.log("Got Here");
-          console.log(update);
-          IngredientModel.findOneAndUpdate(query, update, { new: true },function (err, res) {
-            if (err) {
-              //TODO Add exception for insufficient stock
+        var query = { 'name': ing.name };
+        var update = {
+          name: ing.name,
+          price: ing.price,
+          stock: ing.stock - 1,
+        };
+        list.push(ing.name);
+        IngredientModel.findOneAndUpdate(query, update, { new: true },function (err, resp) {
+          if (ing.stock <= 0) {
+            //TODO Add exception for insufficient stock
+            for (var i in list) {
+              IngredientModel.findOne({ 'name': list[i] },  function (err, ingB) {
+                var query = { 'name': ingB.name };
+                var update = {
+                  name: ingB.name,
+                  price: ingB.price,
+                  stock: ingB.stock + 1,
+                };
+
+                IngredientModel.findOneAndUpdate(query, update, { new: true }, function (err, res) {
+                  if (err) { throw err; }
+
+                  console.log("Fail "+ res);
+                });
+
+              });
+
             }
 
-            console.log(res);
-          });
-        }
+          }
+
+          console.log("Succes "+resp);
+        });
       }
     });
 
