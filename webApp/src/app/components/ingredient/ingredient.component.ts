@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { WebServiceIngredient }  from './WebSericeIngredient';
 
 @Component({
   selector: 'app-ingredient',
@@ -6,30 +7,33 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./ingredient.component.css']
 })
 export class IngredientComponent implements OnInit {
-  name:string;
+  name: string;
   price: number;
   stock: number;
+  ingredients = [];
 
-  constructor() {
+
+  constructor(private WebSericeIngredient: WebServiceIngredient) {
     console.log('constructor ran ...')
   }
 
-  ngOnInit() {
+
+
+
+  async ngOnInit() {
     console.log('ngOnInit ran...')
 
-    this.name = 'tomato';
-    this.price = 10;
-    this.stock = 2;
+    var response = await this.WebSericeIngredient.getIngredients();
+    this.ingredients = response.json();
   }
 
   onClick() {
     this.name='Chocolate';
-    this.hobbies.push('New Ingredient');
   }
 
   addIngredient(name) {
     console.log(name);
-    this.
+
     return false;
   }
 
