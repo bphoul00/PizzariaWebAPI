@@ -35,7 +35,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let ingredient of ingredients">
+        <tr *ngFor="let ingredient of webServiceIngredient.ingredients">
           <th scope="row">{{ingredient._id}}</th>
           <td>{{ingredient.name}}</td>
           <td>{{ingredient.price.toFixed(2)}} $</td>

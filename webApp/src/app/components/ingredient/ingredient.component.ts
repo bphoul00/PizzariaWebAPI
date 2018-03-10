@@ -1,4 +1,4 @@
-import { Component, OnInit,Output, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { WebServiceIngredient }  from './WebServiceIngredient';
 
 @Component({
@@ -13,23 +13,13 @@ export class IngredientComponent implements OnInit {
     stock: 0
   }
 
-  @Output() onPosted = new EventEmitter();
-
-
-  constructor(private WebSericeIngredient: WebServiceIngredient) {
-
+  constructor(private webServiceIngredient: WebServiceIngredient) {
   }
 
-  async ngOnInit() {
-
-    var response = await this.WebSericeIngredient.getIngredients();
-    this.ingredients = response.json();
-  }
-
+  ngOnInit() {}
 
   postIngredient( ) {
-   this.WebSericeIngredient.postIngredient( this.newIngredient);
-   this.onPosted.emit(this.newIngredient);
+   this.webServiceIngredient.postIngredient( this.newIngredient);
   }
 
 }

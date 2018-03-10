@@ -118,7 +118,7 @@ app.post('/api/ingredients', function (req, res) {
     if (err) {
       throw err;
     }
-
+    //res.sendStatus(201);
     res.json(ingredient);
 
   });
