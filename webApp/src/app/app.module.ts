@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http'
-import { FormsModule } from '@angular/forms'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { RouterModule} from '@angular/router';
 import { AppComponent } from './app.component';
 import { IngredientComponent } from './components/ingredient/ingredient.component';
@@ -9,6 +9,7 @@ import { WebServiceIngredient} from './components/ingredient/WebServiceIngredien
 import { OrderComponent } from './components/order/order.component';
 import { WebServiceOrder} from './components/order/WebServiceOrder';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { RegisterComponent } from './components/register/register.component';
 
 var routes = [
   {
@@ -18,6 +19,10 @@ var routes = [
 {
   path: 'orders',
   component: OrderComponent
+},
+{
+  path: 'register',
+  component: RegisterComponent
 }];
 
 @NgModule({
@@ -25,13 +30,15 @@ var routes = [
     AppComponent,
     IngredientComponent,
     OrderComponent,
-    NavbarComponent
+    NavbarComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
     HttpModule,
     FormsModule,
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes),
+    ReactiveFormsModule
   ],
   providers: [WebServiceIngredient, WebServiceOrder],
   bootstrap: [AppComponent]

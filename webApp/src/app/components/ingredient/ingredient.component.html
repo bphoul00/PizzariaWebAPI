@@ -1,28 +1,36 @@
+<div class="card w-75">
+    <div class="card-body">
+        <h3 class="card-title">Ingredient's Registration</h3>
 <div class="card">
   <div class="card-block">
     <div class="form-group row">
-      <label for="example-text-input" class="col-2 col-form-label">Name of Ingredient</label>
+      <label class="col-2 col-form-label">Name of Ingredient</label>
       <div class="col-10">
-        <input class="form-control" type="text" [(ngModel)]="newIngredient.name"  id="example-text-input">
+        <input class="form-control" type="text" [(ngModel)]="newIngredient.name">
       </div>
     </div>
     <div class="form-group row">
-      <label for="example-number-input" class="col-2 col-form-label">Price</label>
+      <label class="col-2 col-form-label">Price</label>
       <div class="col-10">
-        <input class="form-control" type="number" [(ngModel)]="newIngredient.price"  id="example-number-input">
+        <input class="form-control" type="number" [(ngModel)]="newIngredient.price">
       </div>
     </div>
     <div class="form-group row">
-      <label for="example-number-input" class="col-2 col-form-label">Stock</label>
+      <label class="col-2 col-form-label">Stock</label>
       <div class="col-10">
-        <input class="form-control" type="number" [(ngModel)]="newIngredient.stock"  id="example-number-input">
+        <input class="form-control" type="number" [(ngModel)]="newIngredient.stock">
       </div>
     </div>
       <button (click)='postIngredient()' type="button" class="btn btn-default">Send</button>
   </div>
 </div>
+</div>
+</div>
 
 
+<div class="card w-75">
+    <div class="card-body">
+        <h3 class="card-title">Ingredient's list</h3>
 <div class="card">
   <div class="card-block">
     <table class="table">
@@ -44,4 +52,6 @@
       </tbody>
     </table>
   </div>
+</div>
+</div>
 </div>

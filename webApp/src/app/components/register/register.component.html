@@ -1,0 +1,44 @@
+<div class="card w-75">
+  <div class="card-body">
+    <h3 class="card-title">Registration</h3>
+    <form [formGroup] ="form" (ngSubmit)="onSubmit()">
+      <div class="form-group row">
+        <label class="col-2 col-form-label">Email</label>
+        <div class="col-10">
+          <input type="email" class="form-control" formControlName="email" >
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-2 col-form-label">Password</label>
+        <div class="col-10">
+          <input class="form-control" type="password" formControlName="password"  >
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-2 col-form-label">Password Comfirmation</label>
+        <div class="col-10">
+          <input class="form-control" type="password"  formControlName="confirmation">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-2 col-form-label">Full name</label>
+        <div class="col-10">
+          <input class="form-control" type="text"  formControlName="name">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-2 col-form-label">Telephone</label>
+        <div class="col-10">
+          <input class="form-control" type="tel" placeholder="1-(555)-555-5555" formControlName="telephone">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label  class="col-2 col-form-label">Address</label>
+        <div class="col-10">
+          <input class="form-control" type="text"  formControlName="address">
+        </div>
+      </div>
+      <button  class="btn btn-default">Submit</button>
+    </form>
+  </div>
+</div>
