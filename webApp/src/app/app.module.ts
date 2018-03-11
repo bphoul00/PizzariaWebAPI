@@ -10,6 +10,7 @@ import { OrderComponent } from './components/order/order.component';
 import { WebServiceOrder} from './components/order/WebServiceOrder';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { RegisterComponent } from './components/register/register.component';
+import { AuthService } from './components/register/auth.service';
 
 var routes = [
   {
@@ -40,7 +41,7 @@ var routes = [
     RouterModule.forRoot(routes),
     ReactiveFormsModule
   ],
-  providers: [WebServiceIngredient, WebServiceOrder],
+  providers: [WebServiceIngredient, WebServiceOrder, AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

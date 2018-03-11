@@ -4,8 +4,11 @@ var mongoose = require('mongoose');
 var fs = require('fs');
 var path = require('path');
 var util = require('util');
+var jwt = require('jsonwebtoken');
 
 var app = express();
+var auth = express();
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 app.use((req, res, next) => {
@@ -14,8 +17,10 @@ app.use((req, res, next) => {
   next();
 });
 
+
 IngredientModel = require('./models/ingredient');
 OrderModel = require('./models/order');
+UserModel = require('./models/users');
 
 //Connect to mongoose
 mongoose.connect('mongodb://localhost/pizzaria');
@@ -161,14 +166,17 @@ app.get('/api/orders', function (req, res) {
 });
 
 
-/*
-app.use(function (req, res, next) {
-console.log(`${req.method} request for ${req.url}`)
-next();
+app.post('/auth/register', function (req, res) {
+  UserModel.addUser(req.body, function (err, user) {
+    if (err) {
+      throw err;
+    }
+
+    var token = jwt.sign(user.id, '123');
+    res.json({ name: user.name, token });
+  });
 });
 
-app.use(express.static('./public'));
-*/
 app.listen(3000);
 
 console.log('Express app ruinning on http://localhost:3000/');
