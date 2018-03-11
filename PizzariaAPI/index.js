@@ -7,7 +7,6 @@ var util = require('util');
 var jwt = require('jsonwebtoken');
 
 var app = express();
-var auth = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
