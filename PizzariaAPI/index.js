@@ -69,16 +69,15 @@ var jsonOrder =
 };
 
 //  var obj = JSON.parse(jsonOrder);
-OrderModel.validateIngredientOrder(jsonOrder, OrderModel
-  .addOrder(jsonOrder, function (err, newOrder) {
-  if (err) {
-    throw err;
+OrderModel.addOrder(jsonOrder, function (err, newOrder) {
+  if (err || !newOrder) {
+    console.log(newOrder);
   }
 
   //console.log(`Order has been inserted`);
-  //console.log(newOrder);
-})
-);
+  console.log(newOrder);
+});
+
 
 
 /*
@@ -116,7 +115,7 @@ app.get('/api/ingredients/instock', function (req, res) {
   });
 });
 
-app.post('/api/ingredients', function (req, res) {
+app.post('/api/ingredients', checkAuthenticated, function (req, res) {
   var ingredient = req.body;
   IngredientModel.addIngredient(ingredient, function (err, ingredient) {
     if (err) {
@@ -128,7 +127,7 @@ app.post('/api/ingredients', function (req, res) {
   });
 });
 
-app.put('/api/ingredients/:_id', function(req, es) {
+app.put('/api/ingredients/:_id', checkAuthenticated, function(req, es) {
   var id =  req.params._id;
   var ingredient = req.body;
   IngredientModel.updateIngredient(id, ingredient, { new: true }, function (err, ingredient) {
@@ -141,7 +140,7 @@ app.put('/api/ingredients/:_id', function(req, es) {
 });
 
 
-app.delete('/api/ingredients/:_id', function (req, res) {
+app.delete('/api/ingredients/:_id', checkAuthenticated, function (req, res) {
   var id =  req.params._id;
   IngredientModel.deleteIngredient(id, function (err, numberRowAffected) {
     if (err) {
@@ -154,7 +153,7 @@ app.delete('/api/ingredients/:_id', function (req, res) {
 
 
 
-app.get('/api/orders', function (req, res) {
+app.get('/api/orders', checkAuthenticated, function (req, res) {
   OrderModel.getOrders(function (err, orders) {
     if (err) {
       throw err;

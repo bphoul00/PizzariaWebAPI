@@ -2,22 +2,22 @@ var mongoose = require('mongoose');
 
 var IngredientModel = require('./ingredient');
 
-//Ingredient Schema
+//Order Schema
 var orderSchema = mongoose.Schema({
-  customerName: { type: String, equired: true },
+  customerName: { type: String, required: true },
   listIngredient: [{ name: String }],
   order_date: { type: Date, default: Date.now }
 });
 
 var OrderModel =  module.exports = mongoose.model('Order', orderSchema);
 
-//Get Ingredient from the mongodb
+//Get Order from the mongodb
 module.exports.getOrders = function (callback, limit) {
   OrderModel.find(callback).limit(limit);
 };
 
-//Add Ingredient to mongodb Ingredient Collection
-module.exports.validateIngredientOrder = function (order, callback) {
+//Add Order to mongodb Orders Collection
+module.exports.addOrder = function (order, callback) {
   var list = [];
   for (var it = 0; it < order.listIngredient.length; it++) {
     var a = order.listIngredient[it].name;
@@ -33,8 +33,11 @@ module.exports.validateIngredientOrder = function (order, callback) {
         list.push(ing.name);
         IngredientModel.findOneAndUpdate(query, update, { new: true },function (err, newIng) {
           if (newIng.stock < 0) {
-            for (var rollBackIndex in list) {
-              IngredientModel.findOne({ 'name': list[rollBackIndex] },  function (err, ingB) {
+            it = order.listIngredient.length;
+            var lengthOfList = list.length;
+            for(var rollBackIndex = 0; rollBackIndex < lengthOfList; rollBackIndex++) {
+              var element = list.pop();
+              IngredientModel.findOne({ name: element },  function (err, ingB) {
                 var query = { 'name': ingB.name };
                 var update = {
                   name: ingB.name,
@@ -45,23 +48,20 @@ module.exports.validateIngredientOrder = function (order, callback) {
                 IngredientModel.findOneAndUpdate(query, update, { new: true }, function (err, res) {
                   if (err) { throw err; }
 
-                  //console.log("Fail "+ res);
                 });
 
               });
             }
+          } else {
+            console.log(list.length +" "+order.listIngredient.length+ "\n\n");
+            if (list.length == order.listIngredient.length) {
+              OrderModel.create(order, callback);
+            }
           }
-
-          //console.log("Succes "+newIng);
         });
       }
     });
 
   }
 
-};
-
-//Add Ingredient to mongodb Ingredient Collection
-module.exports.addOrder  = function (order, callback) {
-  OrderModel.create(order, callback);
 };

@@ -19,7 +19,7 @@ module.exports.getIngredients = function (callback, limit) {
 //Get Ingredient from the mongodb
 module.exports.getIngredientsInstock = function (callback, limit) {
   var query = { stock: { $gt: 0 } };
-  IngredientModel.find(query,callback).limit(limit);
+  IngredientModel.find(query, callback).limit(limit);
 };
 
 //Add Ingredient to mongodb Ingredient Collection
