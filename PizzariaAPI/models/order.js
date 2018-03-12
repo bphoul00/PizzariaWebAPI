@@ -23,7 +23,6 @@ module.exports.validateIngredientOrder = function (order, callback) {
     var a = order.listIngredient[it].name;
     IngredientModel.findOne({ 'name': a },  function (err, ing) {
       if (err || !ing) {
-        console.log('Doesn\'t exist');
       } else {
         var query = { 'name': ing.name };
         var update = {
@@ -65,5 +64,4 @@ module.exports.validateIngredientOrder = function (order, callback) {
 //Add Ingredient to mongodb Ingredient Collection
 module.exports.addOrder  = function (order, callback) {
   OrderModel.create(order, callback);
-  console.log("I think it work!!!!");
-}
+};

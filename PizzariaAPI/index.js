@@ -12,7 +12,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
   next();
 });
 
@@ -41,9 +41,9 @@ fs.readFile(jsonIngredientFile, 'UTF-8', function (err, data) {
   for (var i in listIngredient.ingredients) {
     IngredientModel.addIngredient(listIngredient.ingredients[i], function (err) {
       if (err) {
-        console.log(`Ingredient already exist`);
+        //console.log(`Ingredient already exist`);
       } else {
-        console.log(`Ingredient has been inserted`);
+        //console.log(`Ingredient has been inserted`);
       }
     });
 
@@ -75,8 +75,8 @@ OrderModel.validateIngredientOrder(jsonOrder, OrderModel
     throw err;
   }
 
-  console.log(`Order has been inserted`);
-  console.log(newOrder);
+  //console.log(`Order has been inserted`);
+  //console.log(newOrder);
 })
 );
 
@@ -164,6 +164,22 @@ app.get('/api/orders', function (req, res) {
   });
 });
 
+app.post('/auth/login', function (req, res) {
+  UserModel.findUserbyEmailAndPassword(req.body, function (err, user) {
+    if (err) {
+      throw err;
+    }
+    if (!user) {
+      return res.json({
+        success: false,
+        message: 'email or password is incorrect'
+      });
+    } else {
+      sendToken(user, res);
+    }
+
+  });
+});
 
 app.post('/auth/register', function (req, res) {
   UserModel.addUser(req.body, function (err, user) {
@@ -171,8 +187,37 @@ app.post('/auth/register', function (req, res) {
       throw err;
     }
 
-    var token = jwt.sign(user.id, '123');
-    res.json({ name: user.name, token });
+    sendToken(user, res);
+  });
+});
+
+function sendToken(user, res) {
+  var token = jwt.sign(user.id, '123');
+  res.json({ name: user.name, token });
+}
+
+function checkAuthenticated(req, res, next) {
+  if (!req.header('authorization')) {
+    return res.status(401).send(
+      { message: 'Unauthorized request. Missing authentication header' });
+  }
+
+  var token = req.header('authorization').split(' ')[1];
+  var payload = jwt.decode(token, '123');
+
+  if (!payload) {
+    return res.status(401).send(
+      { message: 'Unauthorized requested. Authentication header invalid' });
+  }
+
+  req.user = payload;
+
+  next();
+}
+
+app.get('/users/me', checkAuthenticated, (req, res) => {
+  UserModel.findUserbyId(req.user, function (err, authUser) {
+    res.json(authUser);
   });
 });
 

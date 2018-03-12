@@ -24,8 +24,14 @@ module.exports.addUser = function (user, callback) {
 };
 
 //Find User by Id in mongodb users Collection
-module.exports.findUserbyId = function (id, option, callback) {
-  var query = { id: id };
+module.exports.findUserbyId = function (id, callback) {
+  var query = { _id: id };
+  UserModel.findOne(query, callback);
+};
+
+//Find User by email and password in mongodb users Collection
+module.exports.findUserbyEmailAndPassword = function (loginData, callback) {
+  var query = { email: loginData.email, password: loginData.password };
   UserModel.findOne(query, callback);
 };
 

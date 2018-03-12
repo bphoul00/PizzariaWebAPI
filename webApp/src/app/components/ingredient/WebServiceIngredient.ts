@@ -1,6 +1,7 @@
 import { Http } from '@angular/http';
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/toPromise';
+import { AuthService } from './../register/auth.service'
 
 
 @Injectable()
@@ -8,7 +9,7 @@ export class WebServiceIngredient {
   ingredients = [];
   BASE_URL = 'http://localhost:3000/api/';
 
-  constructor(private http:Http) {
+  constructor(private http:Http, private auth: AuthService) {
     this.getIngredients();
   }
 
@@ -46,6 +47,6 @@ export class WebServiceIngredient {
     alert(error);
     //TODO Better UI error notification
 
-
   }
+
 }

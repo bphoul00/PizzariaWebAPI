@@ -11,6 +11,7 @@ import { WebServiceOrder} from './components/order/WebServiceOrder';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { RegisterComponent } from './components/register/register.component';
 import { AuthService } from './components/register/auth.service';
+import { LoginComponent } from './components/login/login.component';
 
 var routes = [
   {
@@ -24,6 +25,10 @@ var routes = [
 {
   path: 'register',
   component: RegisterComponent
+},
+{
+  path: 'login',
+  component: LoginComponent
 }];
 
 @NgModule({
@@ -32,7 +37,8 @@ var routes = [
     IngredientComponent,
     OrderComponent,
     NavbarComponent,
-    RegisterComponent
+    RegisterComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

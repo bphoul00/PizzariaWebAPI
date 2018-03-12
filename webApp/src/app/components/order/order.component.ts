@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { WebServiceOrder} from './WebServiceOrder';
 import { WebServiceIngredient }  from './../ingredient/WebServiceIngredient';
 
+import 'rxjs/add/operator/map'
+
+
 @Component({
   selector: 'app-order',
   templateUrl: './order.component.html',
@@ -33,6 +36,9 @@ export class OrderComponent implements OnInit {
 
     var responseIng = await this.WebServiceIngredient.getIngredientsInstock();
     this.ingredients = responseIng.json();
+
+    //TEST
+    this.WebServiceOrder.getUser().subscribe();
 
   }
 
