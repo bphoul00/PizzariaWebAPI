@@ -7,17 +7,19 @@ import { AuthService } from './../register/auth.service'
 @Injectable()
 export class WebServiceIngredient {
   ingredients = [];
-  BASE_URL = 'http://localhost:3000/api/';
+  BASE_URL = 'http://localhost:3000/api';
 
   constructor(private http:Http, private auth: AuthService) {
     this.getIngredients();
   }
 
 
-  async getIngredients() {
+  getIngredients() {
     try {
-      var response = await this.http.get( this.BASE_URL + 'ingredients/').toPromise();
-      this.ingredients = response.json();
+      this.http.get( this.BASE_URL + '/ingredients', this.auth.tokenHeader).map(res => {
+        this.ingredients = res.json();
+        console.log(this.ingredients);
+      });
     } catch (error) {
       this.handleError("Unable to get ingredients");
 
@@ -26,17 +28,18 @@ export class WebServiceIngredient {
 
   getIngredientsInstock() {
     try {
-      return this.http.get( this.BASE_URL + 'ingredients/instock').toPromise();
+      return this.http.get( this.BASE_URL + '/ingredients/instock', this.auth.tokenHeader).map(res => res.json());
     } catch {
       this.handleError("Unable to get ingredient");
     }
 
   }
 
-  async postIngredient(ingredient) {
+  postIngredient(ingredient) {
     try{
-      var response = await this.http.post( this.BASE_URL + 'ingredients/',ingredient).toPromise();
-      this.ingredients.push(response.json());
+      this.http.post( this.BASE_URL + '/ingredients/', ingredient, this.auth.tokenHeader).map(res => {
+        this.ingredients.push(res.json())
+      });
     } catch {
       this.handleError("Unable to create ingredient");
     }

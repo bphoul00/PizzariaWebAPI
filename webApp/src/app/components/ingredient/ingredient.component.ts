@@ -16,10 +16,15 @@ export class IngredientComponent implements OnInit {
   constructor(private webServiceIngredient: WebServiceIngredient) {
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    
+
+
+
+  }
 
   postIngredient( ) {
-   this.webServiceIngredient.postIngredient( this.newIngredient);
+   this.webServiceIngredient.postIngredient( this.newIngredient)
   }
 
 }

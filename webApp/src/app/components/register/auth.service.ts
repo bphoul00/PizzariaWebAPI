@@ -54,10 +54,4 @@ export class AuthService {
      this.router.navigate(['/']);
 
    }
-/*
-   getUser () {
-     return this.http.get(this.BASE_URL + 'users/me').map(res => res.json());
-   }
-   */
-
 }

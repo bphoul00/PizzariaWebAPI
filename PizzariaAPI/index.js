@@ -95,7 +95,7 @@ app.get('/', function (req, res) {
   res.send('Please use /api/orders  or /api/ingredients');
 });
 
-app.get('/api/ingredients', function (req, res) {
+app.get('/api/ingredients', checkAuthenticated, function (req, res) {
   IngredientModel.getIngredients(function (err, ingredients) {
     if (err) {
       throw err;
@@ -105,7 +105,7 @@ app.get('/api/ingredients', function (req, res) {
   });
 });
 
-app.get('/api/ingredients/instock', function (req, res) {
+app.get('/api/ingredients/instock', checkAuthenticated, function (req, res) {
   IngredientModel.getIngredientsInstock(function (err, ingredients) {
     if (err) {
       throw err;
@@ -163,6 +163,12 @@ app.get('/api/orders', checkAuthenticated, function (req, res) {
   });
 });
 
+app.get('/users/me', checkAuthenticated, (req, res) => {
+  UserModel.findUserbyId(req.user, function (err, authUser) {
+    res.json(authUser);
+  });
+});
+
 app.post('/auth/login', function (req, res) {
   UserModel.findUserbyEmailAndPassword(req.body, function (err, user) {
     if (err) {
@@ -213,12 +219,6 @@ function checkAuthenticated(req, res, next) {
 
   next();
 }
-
-app.get('/users/me', checkAuthenticated, (req, res) => {
-  UserModel.findUserbyId(req.user, function (err, authUser) {
-    res.json(authUser);
-  });
-});
 
 app.listen(3000);
 

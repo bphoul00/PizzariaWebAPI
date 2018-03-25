@@ -12,7 +12,7 @@ export class WebServiceOrder {
   constructor(private http:Http, private auth: AuthService) {}
 
   getOrders() {
-    return this.http.get( this.BASE_URL+'/api/orders').toPromise();
+    return this.http.get( this.BASE_URL+'/api/orders', this.auth.tokenHeader).map(res => res.json());
 
   }
 

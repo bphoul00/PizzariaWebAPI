@@ -31,11 +31,16 @@ export class OrderComponent implements OnInit {
 
   async ngOnInit() {
 
-    var response = await this.WebServiceOrder.getOrders();
-    this.orders = response.json();
+    this.WebServiceOrder.getOrders().subscribe( res => {
+    this.orders = res;
+    });
 
-    var responseIng = await this.WebServiceIngredient.getIngredientsInstock();
-    this.ingredients = responseIng.json();
+
+
+    this.WebServiceIngredient.getIngredientsInstock().subscribe( res => {
+    this.ingredients = res;
+    console.log(res);
+    });
 
     //TEST
     this.WebServiceOrder.getUser().subscribe();
